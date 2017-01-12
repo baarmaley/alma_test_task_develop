@@ -5,13 +5,17 @@ require_once "Class/ParseCSV.php";
 
 try{
 
+    $dataBase = null;
+
     $dataBase = db::getDB();
 
     if(!$dataBase->existTableUser()){
 
+        $arrayParse = ParseCSV::parse('database.csv');
+
         $dataBase->createTableUser();
 
-        $dataBase->insertTableUser(ParseCSV::parse('database.csv'));
+        $dataBase->insertTableUser($arrayParse);
 
     }
 
@@ -25,8 +29,9 @@ try{
 
     echo implode(',', $user);
 
-}catch (ExeptionFileNotFound $e){
-    echo 'File not found...';
 }catch (ExceptionDataBase $e){
-    echo 'Error db: ' + $e->getMessage();
+    echo 'Error db: '.$e->getMessage();
+}
+catch (ExeptionFileNotFound $e){
+    echo $e->getMessage();
 }

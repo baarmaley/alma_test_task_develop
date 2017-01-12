@@ -18,7 +18,7 @@ class db
         try{
             $this->pdo  = new PDO($str_connect, Settings::DB_USER, Settings::DB_PASS);
         }catch (PDOException $e){
-            throw new ExceptionDataBase("Connect error: " + $e->getMessage());
+            throw new ExceptionDataBase($e->getMessage());
         }
 
     }
